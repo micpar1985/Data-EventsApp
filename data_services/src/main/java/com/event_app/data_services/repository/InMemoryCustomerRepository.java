@@ -1,15 +1,8 @@
 package com.event_app.data_services.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.*;
 import org.springframework.stereotype.Component;
-
 import com.event_app.data_services.model.Customer;
-import com.sun.el.stream.Optional;
 
 @Component
 public class InMemoryCustomerRepository implements CustomerRepository {
@@ -21,10 +14,10 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 	
 		
 	@Override
-	public Customer findById(Long id) {
-		Optional<Customer> customerOptional = customerData.stream().filter(customer -> customer.getId().equals(id)).findAny();
+	public String findById(Long id) {
+		Optional<Customer> customerOptional = customerData.stream().filter(customer -> customer.getId() == id).findAny();
 		
-		return customerOptional.orElse(null);
+		return customerOptional.map(Customer::getName).orElse(null);
 	}
 	
 	@Override

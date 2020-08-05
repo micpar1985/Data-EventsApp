@@ -25,7 +25,7 @@ public class CustomersController {
     }
 
     @RequestMapping("/{id}")
-    public Customer findCustomerById(@PathVariable("id") Long id) {
+    public String findCustomerById(@PathVariable("id") Long id) {
         return customerService.findById(id);
     }
 

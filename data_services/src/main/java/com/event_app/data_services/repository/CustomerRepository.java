@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 //import com.event_app.data_services
 public interface CustomerRepository { 
 
-		public Customer findById(Long id);
+		public String findById(Long id);
 		
 		public Collection<Customer> findAll();
 		

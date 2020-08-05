@@ -20,7 +20,7 @@ public class RegistrationsController {
 
         return registrations;
     }
-    
+
     @RequestMapping("/{id}")
     public Registration findRegistrationById(@PathVariable("id") Long id) {
         return registrationService.findById(id);
