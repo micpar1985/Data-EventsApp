@@ -11,8 +11,8 @@ import java.util.Collection;
 @RequestMapping("/events")
 public class EventsController {
 
-    @Autowired
-    EventService eventService;
+    /*@Autowired
+    //EventService eventService;
 
     @RequestMapping
     public Collection<Event> findAllEvents() {
@@ -20,7 +20,7 @@ public class EventsController {
 
         return events;
 
-    }
+    }*/
 
 
 }

@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.event_app.data_services.model.Customer;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InMemoryCustomerRepository implements CustomerRepository {
 
 	

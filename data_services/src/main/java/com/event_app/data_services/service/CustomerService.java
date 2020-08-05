@@ -5,7 +5,6 @@ import java.util.Collection;
 import com.event_app.data_services.model.Customer;
 import org.springframework.stereotype.Component;
 
-@Component
 public interface CustomerService {
 	
     //public Customer findById(Long id);

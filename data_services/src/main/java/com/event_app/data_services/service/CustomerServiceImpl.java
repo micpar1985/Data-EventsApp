@@ -5,11 +5,15 @@ import java.util.List;
 
 import com.event_app.data_services.model.Customer;
 import com.event_app.data_services.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Component
 public class CustomerServiceImpl implements CustomerService{
 
+	@Autowired
 	private CustomerRepository customerRepository;
 	
 	@Override 

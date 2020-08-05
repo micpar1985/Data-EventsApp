@@ -11,8 +11,8 @@ import java.util.Collection;
 @RequestMapping("/registrations")
 public class RegistrationsController {
 
-    @Autowired
-    RegistrationService registrationService;
+    /*//@Autowired
+    //RegistrationService registrationService;
 
     @RequestMapping
     public Collection<Registration> findAllRegistrations() {
@@ -20,7 +20,7 @@ public class RegistrationsController {
 
         return registrations;
 
-    }
+    }*/
 
 
 }
