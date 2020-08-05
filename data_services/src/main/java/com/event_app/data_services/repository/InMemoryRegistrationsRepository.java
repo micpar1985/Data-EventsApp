@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.registration_app.data_services.model.Registration;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
+import com.event_app.data_services.model.Registration;
+
+@Component
 public class InMemoryRegistrationsRepository {
 	
 	private List<Registration> RegistrationData = new ArrayList<>(Arrays.asList(

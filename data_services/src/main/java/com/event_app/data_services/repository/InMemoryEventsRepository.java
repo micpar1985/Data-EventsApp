@@ -7,8 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import com.event_app.data_services.model.Event;
 
+@Component
 public class InMemoryEventsRepository implements EventsRepository {
 
 	private List<Event> eventData = new ArrayList<>(Arrays.asList(
