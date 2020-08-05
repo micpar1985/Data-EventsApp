@@ -19,8 +19,13 @@ public class RegistrationsController {
         Collection<Registration> registrations = registrationService.findAll();
 
         return registrations;
-
-    }*/
+    }
+    
+    @RequestMapping("/{id}")
+    public Registration findRegistrationById(@PathVariable("id") Long id) {
+        return registrationService.findById(id);
+    }
+    */
 
 
 }

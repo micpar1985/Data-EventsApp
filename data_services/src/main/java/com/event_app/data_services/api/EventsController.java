@@ -20,7 +20,16 @@ public class EventsController {
 
         return events;
 
-    }*/
+    }
+
+    @RequestMapping("/{id}")
+    public Event findEventById(@PathVariable("id") Long id) {
+        return eventService.findById(id);
+    }
+
+
+
+    */
 
 
 }
