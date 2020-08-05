@@ -6,12 +6,12 @@ public class Customer implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	private Long id;
 	private String name;
 	private String password;
 	private String email;
 	
-	public Customer(long id, String name, String password, String email) {
+	public Customer(Long id, String name, String password, String email) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -22,7 +22,7 @@ public class Customer implements Serializable{
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
