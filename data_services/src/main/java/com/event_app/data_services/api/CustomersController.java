@@ -4,6 +4,7 @@ import com.event_app.data_services.model.Customer;
 import com.event_app.data_services.repository.CustomerRepository;
 import com.event_app.data_services.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
@@ -23,9 +24,10 @@ public class CustomersController {
         return customers;
     }
 
-
-
-
+    @RequestMapping("/{id}")
+    public Collection<Customer> findCustomerById(@PathVariable("id") Long id) {
+        return customerService.findById(id);
+    }
 
 
 }
