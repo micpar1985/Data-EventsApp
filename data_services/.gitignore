@@ -32,3 +32,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Eclipse ###
+bin/
+.tmp
+tmp
