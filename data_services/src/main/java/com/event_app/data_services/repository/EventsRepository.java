@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.event_app.data_services.model.Event;
 
-public class EventsRepository {
+public interface EventsRepository {
 
 	public Event findById(Long id);
 	

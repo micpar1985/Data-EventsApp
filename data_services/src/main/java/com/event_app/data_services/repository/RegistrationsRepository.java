@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.registration_app.data_services.model.Registration;
 
-public class RegistrationsRepository {
+public interface RegistrationsRepository {
 
 
 	public Registration findById(Long id);
