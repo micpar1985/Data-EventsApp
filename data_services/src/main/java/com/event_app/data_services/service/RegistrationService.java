@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public interface RegistrationService {
 	
-    public Registration findById(Long id);
+    String findById(Long id);
 	
-	public Collection<Registration> findAll();
+	Collection<Registration> findAll();
 
 }

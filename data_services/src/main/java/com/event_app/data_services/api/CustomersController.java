@@ -24,10 +24,9 @@ public class CustomersController {
         return customers;
     }
 
-    /*@RequestMapping("/{id}")
+    @RequestMapping("/{id}")
     public String findCustomerById(@PathVariable("id") Long id) {
         return customerService.findById(id);
     }
-*/
 
 }

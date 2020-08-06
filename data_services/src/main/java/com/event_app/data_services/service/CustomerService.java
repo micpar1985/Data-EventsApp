@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 public interface CustomerService {
 	
-    public Customer findById(Long id);
+    String findById(Long id);
 	
-	public Collection<Customer> findAll();
+	Collection<Customer> findAll();
 
 }

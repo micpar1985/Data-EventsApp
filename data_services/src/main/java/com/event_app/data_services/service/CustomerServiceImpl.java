@@ -16,10 +16,10 @@ public class CustomerServiceImpl implements CustomerService{
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	//@Override
-	public Customer findById(Long id) {
-		return null;
-		//return customerRepository.findById(id);
+	@Override
+	public String findById(Long id) {
+
+		return customerRepository.findById(id);
 		
 	}
 	
@@ -28,7 +28,5 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return customerRepository.findAll();
 	}
-	
-	
-	
+
 }

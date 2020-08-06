@@ -66,4 +66,14 @@ public class Event implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "Event{" +
+				"id=" + id +
+				", code='" + code + '\'' +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				'}';
+	}
 }

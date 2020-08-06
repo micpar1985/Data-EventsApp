@@ -10,17 +10,18 @@ import  com.event_app.data_services.model.Registration;
 
 import com.event_app.data_services.repository.EventsRepository;
 import com.event_app.data_services.repository.RegistrationsRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RegistrationServiceImpl implements RegistrationService{
 
 	@Autowired
 	private RegistrationsRepository registrationsRepository;
 	
 	@Override
-	public Registration findById(Long id) {
+	public String findById(Long id) {
 		
 		return registrationsRepository.findById(id);
-		
 	}
 	
 	@Override 

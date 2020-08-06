@@ -6,7 +6,7 @@ import com.event_app.data_services.model.Registration;
 
 public interface RegistrationsRepository {
 
-	public Registration findById(Long id);
+	public String findById(Long id);
 	
 	public Collection<Registration> findAll();
 	
