@@ -1,11 +1,10 @@
-package com.registration_app.data_services.repository;
+package com.event_app.data_services.repository;
 
 import java.util.Collection;
 
-import com.registration_app.data_services.model.Registration;
+import com.event_app.data_services.model.Registration;
 
 public interface RegistrationsRepository {
-
 
 	public Registration findById(Long id);
 	

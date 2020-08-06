@@ -17,10 +17,9 @@ public class InMemoryEventsRepository implements EventsRepository {
 	private List<Event> eventData = new ArrayList<>(Arrays.asList(
 		new Event( 01L,"code1", "Sir", "this is a description"),
 		new Event( 02L, "code2","Ma'am", "also a description")));
-	
-		
+
 	@Override
-	public Event findById(Long id) {
+	public Event findByEventId(Long id) {
 		Optional<Event> eventOptional = eventData.stream().filter(event -> event.getId().equals(id)).findAny();
 		
 		return eventOptional.orElse(null);

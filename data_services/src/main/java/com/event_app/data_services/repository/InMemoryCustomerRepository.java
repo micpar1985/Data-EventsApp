@@ -15,7 +15,8 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 		
 	@Override
 	public String findById(Long id) {
-		Optional<Customer> customerOptional = customerData.stream().filter(customer -> customer.getId() == id).findAny();
+		Optional<Customer> customerOptional = customerData.stream()
+				.filter(customer -> customer.getId() == id).findAny();
 		
 		return customerOptional.map(Customer::getName).orElse(null);
 	}
