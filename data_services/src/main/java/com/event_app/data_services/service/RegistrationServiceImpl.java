@@ -19,7 +19,7 @@ public class RegistrationServiceImpl implements RegistrationService{
 	private RegistrationsRepository registrationsRepository;
 	
 	@Override
-	public String findById(Long id) {
+	public Registration findById(Long id) {
 		
 		return registrationsRepository.findById(id);
 	}
