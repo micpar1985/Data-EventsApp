@@ -28,11 +28,6 @@ public class EventsController {
         return eventService.findByEventId(id);
     }
 
-    @RequestMapping("/{name}")
-    public String findEventByName(@PathVariable("name") String name) {
-        return eventService.findByEventName(name);
-    }
-
 
 
 

@@ -6,7 +6,7 @@ import com.event_app.data_services.model.Event;
 
 public interface EventsRepository {
 
-	public String findByEventId(Long id);
+	public Event findByEventId(Long id);
 	
 	public Collection<Event> findAll();
 	

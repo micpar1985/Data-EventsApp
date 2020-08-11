@@ -19,10 +19,10 @@ public class InMemoryEventsRepository implements EventsRepository {
 		new Event( 02L, "code2","Ma'am", "also a description")));
 
 	@Override
-	public String findByEventId(Long id) {
+	public Event findByEventId(Long id) {
 		Optional<Event> eventOptional = eventData.stream().filter(event -> event.getId().equals(id)).findAny();
 		
-		return eventOptional.map(Event::toString).orElse(null);
+		return eventOptional.orElse(null);
 	}
 	
 	@Override
