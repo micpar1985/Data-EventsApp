@@ -24,7 +24,7 @@ public class EventsController {
     }
 
     @RequestMapping("/{id}")
-    public String findEventById(@PathVariable("id") Long id) {
+    public Event findEventById(@PathVariable("id") Long id) {
         return eventService.findByEventId(id);
     }
 
