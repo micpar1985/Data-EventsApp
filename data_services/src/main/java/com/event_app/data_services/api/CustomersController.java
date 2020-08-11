@@ -29,7 +29,7 @@ public class CustomersController {
         return customerService.findById(id);
     }
 
-    @RequestMapping("/{name}")
+    @RequestMapping("/byName/{name}")
     public Customer findCustomerByName(@PathVariable("name") String name) {
         return customerService.findByName(name);
     }

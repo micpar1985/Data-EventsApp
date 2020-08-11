@@ -11,6 +11,6 @@ public interface CustomerService {
 	
 	Collection<Customer> findAll();
 	
-	Collection<Customer> findByName(String name);
+	Customer findByName(String name);
 
 }
