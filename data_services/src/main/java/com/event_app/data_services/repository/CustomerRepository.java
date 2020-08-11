@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 //import com.event_app.data_services
 public interface CustomerRepository { 
 
-		public String findById(Long id);
+		public Customer findById(Long id);
 		
 		public Collection<Customer> findAll();
 		
-		public Collection<Customer> findByName(String name);
+		public Customer findByName(String name);
 		
 		//public long count();
 		
