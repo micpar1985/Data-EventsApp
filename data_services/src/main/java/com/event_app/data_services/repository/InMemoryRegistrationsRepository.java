@@ -16,10 +16,10 @@ public class InMemoryRegistrationsRepository implements RegistrationsRepository 
 			new Registration( 02L, 201L,2001L, parseDate("2021-05-17"), "also a note")));
 
 	@Override
-		public String findById(Long id) {
+		public Registration findById(Long id) {
 			Optional<Registration> registrationOptional = registrationData.stream().filter(registration -> registration.getId().equals(id)).findAny();
 			
-			return registrationOptional.map(Registration::toString).orElse(null);
+			return registrationOptional.orElse(null);
 		}
 		
 		@Override

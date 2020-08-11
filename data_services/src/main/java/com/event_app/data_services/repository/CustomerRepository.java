@@ -12,7 +12,7 @@ public interface CustomerRepository {
 		
 		public Collection<Customer> findAll();
 		
-		//public Collection<Customer> findByName(String name);
+		public Collection<Customer> findByName(String name);
 		
 		//public long count();
 		
