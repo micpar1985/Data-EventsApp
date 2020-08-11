@@ -24,7 +24,7 @@ public class RegistrationsController {
     }
 
     @RequestMapping("/{id}")
-    public String findRegistrationById(@PathVariable("id") Long id) {
+    public Registration findRegistrationById(@PathVariable("id") Long id) {
 
         return registrationService.findById(id);
     }
