@@ -15,11 +15,11 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 	
 		
 	@Override
-	public String findById(Long id) {
+	public Customer findById(Long id) {
 		Optional<Customer> customerOptional = customerData.stream()
 				.filter(customer -> customer.getId() == id).findAny();
 		
-		return customerOptional.map(Customer::toString).orElse(null);
+		return customerOptional.orElse(null);
 	}
 	
 	@Override
@@ -28,9 +28,8 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 	}
 	
 	@Override
-	public Collection<Customer> findByName(String name) {
-		return customerData.stream().filter(customer -> customer.getName().toLowerCase().equals(name.toLowerCase()))
-				.collect(Collectors.toList());
+	public Customer findByName(String name) {
+		return customerData.stream().filter(customer -> customer.getName().toLowerCase().equals(name.toLowerCase())).findFirst().orElse(null);
 		
 	}
 
