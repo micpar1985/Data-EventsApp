@@ -29,4 +29,11 @@ public class CustomersController {
         return customerService.findById(id);
     }
 
+    @RequestMapping("/{name}")
+    public String findCustomerByName(@PathVariable("name") String name) {
+        return customerService.findByName(name);
+    }
+
+
+
 }
