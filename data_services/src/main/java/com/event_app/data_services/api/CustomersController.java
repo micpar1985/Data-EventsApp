@@ -30,7 +30,7 @@ public class CustomersController {
     }
 
     @RequestMapping("/{name}")
-    public String findCustomerByName(@PathVariable("name") String name) {
+    public Customer findCustomerByName(@PathVariable("name") String name) {
         return customerService.findByName(name);
     }
 
