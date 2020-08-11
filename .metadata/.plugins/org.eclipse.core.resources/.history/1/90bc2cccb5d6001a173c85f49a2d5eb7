@@ -1,0 +1,16 @@
+package com.event_app.data_services.service;
+
+import java.util.Collection;
+
+public class CustomerServiceImpl implements CustomerService{
+
+	@Override 
+	public Customer findById(Long id) {
+		
+		return findById(id);
+		
+	}
+	
+	public Collection<Customer> findAll();
+	
+}

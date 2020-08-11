@@ -17,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService{
 	private CustomerRepository customerRepository;
 	
 	@Override
-	public String findById(Long id) {
+	public Customer findById(Long id) {
 
 		return customerRepository.findById(id);
 		
@@ -27,6 +27,12 @@ public class CustomerServiceImpl implements CustomerService{
 	public Collection<Customer> findAll(){
 		
 		return customerRepository.findAll();
+	}
+	
+	@Override
+	public Collection<Customer> findByName(String name){
+		
+		return customerRepository.findByName(name);
 	}
 
 }
