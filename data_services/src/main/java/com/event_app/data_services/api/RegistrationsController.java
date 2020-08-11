@@ -23,9 +23,10 @@ public class RegistrationsController {
         return registrations;
     }
 
-    @RequestMapping("/{id}")
-    public String findRegistrationById(@PathVariable("id") Long id) {
-        return registrationService.findById(id);
+    @RequestMapping("/{name}")
+    public String findRegistrationByName(@PathVariable("name") String name) {
+
+        return registrationService.findByName(name);
     }
 
 
