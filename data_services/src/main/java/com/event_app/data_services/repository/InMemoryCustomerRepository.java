@@ -1,6 +1,8 @@
 package com.event_app.data_services.repository;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 import com.event_app.data_services.model.Customer;
 
@@ -25,5 +27,11 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 			return Collections.unmodifiableCollection(customerData);
 	}
 	
+	@Override
+	public Collection<Customer> findByName(String name) {
+		return customerData.stream().filter(customer -> customer.getName().toLowerCase().equals(name.toLowerCase()))
+				.collect(Collectors.toList());
+		
+	}
 
 }
