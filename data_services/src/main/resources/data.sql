@@ -7,16 +7,16 @@ insert into EVENT (CODE, TITLE, DESCRIPTION) VALUES ('JBP', 'Joes Birthday Party
 insert into EVENT (CODE, TITLE, DESCRIPTION) VALUES ('SSN', 'Study Session', 'Math is Fun');
 
 insert into REGISTRATION (EVENT_ID, CUSTOMER_ID, REGISTRATION_DATE, NOTES)
-values('2', '3', '2020-10-10 15:00:00.0', 'Hosting');
+values('2', '3', '2020-10-10', 'Hosting');
 
 insert into REGISTRATION (EVENT_ID, CUSTOMER_ID, REGISTRATION_DATE, NOTES)
-values('1', '1', '2020-10-10 00:00:00.0', 'Excited');
+values('1', '1', '2020-10-10', 'Excited');
 
 insert into REGISTRATION (EVENT_ID, CUSTOMER_ID, REGISTRATION_DATE, NOTES)
-values('2', '2', '2020-10-10 15:00:00.0', 'Bringing snacks');
+values('2', '2', '2020-10-10', 'Bringing snacks');
 
 insert into REGISTRATION (EVENT_ID, CUSTOMER_ID, REGISTRATION_DATE, NOTES)
-values('1', '2', '2020-10-10 00:00:00.0', 'this is a note');
+values('1', '2', '2020-10-10', 'this is a note');
 
 insert into REGISTRATION (EVENT_ID, CUSTOMER_ID, REGISTRATION_DATE, NOTES)
-values('3', '1', '2020-10-10 15:00:00.0', 'Math is not fun');
+values('3', '1', '2020-10-10', 'Math is not fun');

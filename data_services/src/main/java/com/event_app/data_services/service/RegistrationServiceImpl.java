@@ -1,14 +1,12 @@
 package com.event_app.data_services.service;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.event_app.data_services.model.Event;
 import  com.event_app.data_services.model.Registration;
 
-import com.event_app.data_services.repository.EventsRepository;
 import com.event_app.data_services.repository.RegistrationsRepository;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService{
 	private RegistrationsRepository registrationsRepository;
 	
 	@Override
-	public Registration findById(Long id) {
+	public Optional<Registration> findById(Long id) {
 		
 		return registrationsRepository.findById(id);
 	}

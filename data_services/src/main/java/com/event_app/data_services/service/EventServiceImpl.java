@@ -1,6 +1,8 @@
 package com.event_app.data_services.service;
 
 import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.event_app.data_services.model.Event;
 import com.event_app.data_services.repository.EventsRepository;
@@ -14,8 +16,8 @@ public class EventServiceImpl implements EventService{
 	private EventsRepository eventsRepository;
 
 	@Override
-	public Event findByEventId(Long id) {
-		return eventsRepository.findByEventId(id);
+	public Optional<Event> findByEventId(Long id) {
+		return eventsRepository.findById(id);
 	}
 
 	@Override
