@@ -12,5 +12,15 @@ public interface CustomerService {
 	Collection<Customer> findAll();
 	
 	Customer findByName(String name);
+	
+    public Iterable<Customer> findAllCustomers();
+	
+	public Optional<Customer> findCustomerById(long id);
+
+	public void save(Customer customer); 
+	
+	public void update(Customer customer);
+	
+	public void delete(long id);
 
 }
