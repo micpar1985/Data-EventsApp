@@ -8,8 +8,10 @@ import com.event_app.data_services.model.Event;
 
 public interface EventService {
 	
-	Optional<Event> findByEventId(Long id);
+	public Optional<Event> findByEventId(Long id);
 	
-	Iterable<Event> findAllEvents();
+	public Iterable<Event> findAllEvents();
+	
+	public void saveEvent(Event event);
 	
 }
