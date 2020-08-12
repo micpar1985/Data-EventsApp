@@ -54,7 +54,9 @@ public class EventsController {
 
 	@PostMapping
 	public ResponseEntity<?> addEvent(@RequestBody Event newEvent, UriComponentsBuilder uri) {
-		if (newEvent.getId() != 0 || newEvent.getCode() == null || newEvent.getTitle() == null
+		if (newEvent.getId() != 0 
+				|| newEvent.getCode() == null 
+				|| newEvent.getTitle() == null
 				|| newEvent.getDescription() == null) {// Reject - we'll assign the Event id
 			return ResponseEntity.badRequest().build();
 		}
@@ -67,17 +69,20 @@ public class EventsController {
 
 	@PutMapping("/{eventId}")
 	public ResponseEntity<?> putEvent(@RequestBody Event newEvent,
-			@PathVariable("customerId") long customerId) {
-		if (newEvent.getId() != eventId || newEvent.getCode() == null || newEvent.getTitle() == null || newEvent.getDescription()) {
+			@PathVariable("eventId") long eventId) {
+		if (newEvent.getId() != eventId 
+				|| newEvent.getCode() == null 
+				|| newEvent.getTitle() == null 
+				|| newEvent.getDescription()== null) {
 			return ResponseEntity.badRequest().build();
 		}
-		newEvent = eventService.save(newEvent);
+		newEvent = repo.save(newEvent);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{id}")
 	public void deleteEvent(@PathVariable Long id) {
-		eventService.deleteById(id);
+		repo.deleteById(id);
 	}
 
 }
