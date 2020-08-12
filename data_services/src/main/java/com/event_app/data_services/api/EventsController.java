@@ -2,7 +2,6 @@ package com.event_app.data_services.api;
 
 import java.net.URI;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.event_app.data_services.model.Event;
 import com.event_app.data_services.repository.EventsRepository;
 import com.event_app.data_services.service.EventService;
+
 
 @RestController
 @RequestMapping("/events")
@@ -76,13 +75,13 @@ public class EventsController {
 				|| newEvent.getDescription()== null) {
 			return ResponseEntity.badRequest().build();
 		}
-		newEvent = repo.save(newEvent);
+		newEvent = eventService.save(newEvent);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{id}")
 	public void deleteEvent(@PathVariable Long id) {
-		repo.deleteById(id);
+		eventService.deleteById(id);
 	}
 
 }

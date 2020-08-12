@@ -1,6 +1,5 @@
 package com.event_app.data_services.service;
 
-import java.util.Collection;
 import java.util.Optional;
 import com.event_app.data_services.model.Customer;
 import com.event_app.data_services.repository.CustomerRepository;
@@ -13,46 +12,30 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
-	
-	  @Override 
-	  public Customer findByName(String name){
-	  
-	   return customerRepository.findByName(name); 
-	  
-	  }
+
+	@Override
+	public Customer findByName(String name){
+	  return customerRepository.findByName(name);
+	}
 	 
 	@Override
-		public Iterable<Customer> findAll(){
-			
-			return customerRepository.findAll();
-		}
+	public Iterable<Customer> findAll(){
+		return customerRepository.findAll();
+	}
 		
-		@Override
+	@Override
+	public Optional<Customer> findById(long id) {
+		return customerRepository.findById(id);
+	}
 		
-		public Optional<Customer> findById(long id) {
-			
-		
-			return customerRepository.findById(id);
-			
-		}
-		
-	    @Override
-		public Customer save(Customer customer){
-			
-			return customerRepository.save(customer);
-		}
-		
-		
-		
-		@Override
-		public void deleteById(Long id) {
-			
-		   customerRepository.deleteById(id);
-			
-			
-		}
-	
+	@Override
+	public Customer save(Customer customer){
+		return customerRepository.save(customer);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		customerRepository.deleteById(id);
+	}
 
 }
