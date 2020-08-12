@@ -10,6 +10,6 @@ public interface EventService {
 	
 	Optional<Event> findByEventId(Long id);
 	
-	Collection<Event> findAllEvents();
+	Iterable<Event> findAllEvents();
 	
 }

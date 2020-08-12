@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface
 CustomerRepository extends CrudRepository<Customer, Long> {
 
-    public Collection<Customer> findAll();
+    /*public Collection<Customer> findAll();
 
     public Optional<Customer> findById(Long id);
 
-    public Customer findByName(String name);
+    public Customer findByName(String name);*/
 }

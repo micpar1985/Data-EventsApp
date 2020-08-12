@@ -8,6 +8,6 @@ public interface RegistrationService {
 	
     Optional<Registration> findById(Long id);
 	
-	Collection<Registration> findAll();
+	Iterable<Registration> findAll();
 
 }

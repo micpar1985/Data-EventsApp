@@ -8,8 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface RegistrationsRepository extends CrudRepository<Registration, Long> {
 
-	public Optional<Registration> findById(Long id);
+	/*public Optional<Registration> findById(Long id);
 	
-	public Collection<Registration> findAll();
+	public Collection<Registration> findAll();*/
 
 }
