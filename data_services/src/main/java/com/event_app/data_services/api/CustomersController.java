@@ -51,10 +51,10 @@ public class CustomersController {
         return response;
     }
 
-    @PutMapping("/{customerId}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> putCustomer(@RequestBody Customer newCustomer,
-                                         @PathVariable("customerId") long customerId) {
-        if (newCustomer.getId() != customerId
+                                         @PathVariable("id") long id) {
+        if (newCustomer.getId() != id
                 || newCustomer.getName() == null
                 || newCustomer.getEmail() == null) {
             return ResponseEntity.badRequest().build();
