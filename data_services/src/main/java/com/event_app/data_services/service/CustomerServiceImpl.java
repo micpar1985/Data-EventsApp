@@ -14,33 +14,24 @@ public class CustomerServiceImpl implements CustomerService{
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	@Override
-	public Optional<Customer> findById(Long id) {
-
-		return customerRepository.findById(id);
-		
-	}
 	
-	@Override
-	public Collection<Customer> findAll(){
-		
-		return customerRepository.findAll();
-	}
 	
+	  @Override 
+	  public Customer findByName(String name){
+	  
+	   return customerRepository.findByName(name); 
+	  
+	  }
+	 
 	@Override
-	public Customer findByName(String name){
-		
-		return customerRepository.findByName(name);
-	}
-	@Override
-		public Iterable<Customer> findAllCustomers(){
+		public Iterable<Customer> findAll(){
 			
 			return customerRepository.findAll();
 		}
 		
 		@Override
 		
-		public Optional<Customer> findCustomerById(long id) {
+		public Optional<Customer> findById(long id) {
 			
 		
 			return customerRepository.findById(id);
@@ -48,22 +39,17 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		
 	    @Override
-		public void save(Customer customer){
+		public Customer save(Customer customer){
 			
 			return customerRepository.save(customer);
 		}
 		
-		@Override
-		public void update(Customer customer) {
-			
-			return customerRepository.update(customer);
-	
 		
 		
 		@Override
-		public void delete(Long id) {
+		public void deleteById(Long id) {
 			
-			return customerRepository.remove(id);
+		   customerRepository.deleteById(id);
 			
 			
 		}

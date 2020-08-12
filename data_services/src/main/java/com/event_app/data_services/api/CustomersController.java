@@ -19,8 +19,8 @@ public class CustomersController {
     CustomerService customerService;
 
     @RequestMapping
-    public Collection<Customer> findAllCustomers() {
-        Collection<Customer> customers = customerService.findAll();
+    public Iterable<Customer> findAllCustomers() {
+        Iterable<Customer> customers = customerService.findAll();
 
         return customers;
     }
