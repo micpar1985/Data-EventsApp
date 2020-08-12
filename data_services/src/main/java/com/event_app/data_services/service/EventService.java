@@ -12,6 +12,8 @@ public interface EventService {
 	
 	public Iterable<Event> findAllEvents();
 	
-	public void saveEvent(Event event);
+	public Event save(Event event);
+	
+	public void deleteById(Long id);
 	
 }
