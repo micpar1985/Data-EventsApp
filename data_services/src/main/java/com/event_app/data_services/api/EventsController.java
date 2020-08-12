@@ -17,8 +17,8 @@ public class EventsController {
     EventService eventService;
 
     @RequestMapping
-    public Collection<Event> findAllEvents() {
-        Collection<Event> events = eventService.findAllEvents();
+    public Iterable<Event> findAllEvents() {
+        Iterable<Event> events = eventService.findAllEvents();
 
         return events;
     }

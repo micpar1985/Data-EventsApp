@@ -23,7 +23,7 @@ public class RegistrationServiceImpl implements RegistrationService{
 	}
 	
 	@Override 
-	public Collection<Registration> findAll(){
+	public Iterable<Registration> findAll(){
 		
 		return registrationsRepository.findAll();
 	}

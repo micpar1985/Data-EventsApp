@@ -17,8 +17,8 @@ public class RegistrationsController {
     RegistrationService registrationService;
 
     @RequestMapping
-    public Collection<Registration> findAllRegistrations() {
-        Collection<Registration> registrations = registrationService.findAll();
+    public Iterable<Registration> findAllRegistrations() {
+        Iterable<Registration> registrations = registrationService.findAll();
 
         return registrations;
     }
