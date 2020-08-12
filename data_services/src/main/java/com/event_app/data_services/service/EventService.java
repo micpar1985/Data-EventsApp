@@ -1,12 +1,14 @@
 package com.event_app.data_services.service;
 
 import java.util.Collection;
+import java.util.Optional;
+
 import com.event_app.data_services.model.Event;
 
 
 public interface EventService {
 	
-	Event findByEventId(Long id);
+	Optional<Event> findByEventId(Long id);
 	
 	Collection<Event> findAllEvents();
 	

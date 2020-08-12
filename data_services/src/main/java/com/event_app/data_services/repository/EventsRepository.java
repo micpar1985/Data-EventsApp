@@ -1,21 +1,15 @@
 package com.event_app.data_services.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import com.event_app.data_services.model.Event;
+import org.springframework.data.repository.CrudRepository;
 
-public interface EventsRepository {
+public interface EventsRepository extends CrudRepository<Event, Long> {
 
-	public Event findByEventId(Long id);
+	public Optional<Event> findById(Long id);
 	
 	public Collection<Event> findAll();
-	
-	//public Collection<Event> findByName(String name);
-	
-	//public long count();
-	
-	//public Event save(Event event);
-	
-	//public void delete(Event event);
-	
+
 }
