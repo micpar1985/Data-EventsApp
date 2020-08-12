@@ -32,5 +32,41 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return customerRepository.findByName(name);
 	}
+	@Override
+		public Iterable<Customer> findAllCustomers(){
+			
+			return customerRepository.findAll();
+		}
+		
+		@Override
+		
+		public Optional<Customer> findCustomerById(long id) {
+			
+		
+			return customerRepository.findById(id);
+			
+		}
+		
+	    @Override
+		public void save(Customer customer){
+			
+			return customerRepository.save(customer);
+		}
+		
+		@Override
+		public void update(Customer customer) {
+			
+			return customerRepository.update(customer);
+	
+		
+		
+		@Override
+		public void delete(Long id) {
+			
+			return customerRepository.remove(id);
+			
+			
+		}
+	
 
 }
