@@ -2,10 +2,20 @@ package com.event_app.data_services.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Event")
 public class Event implements Serializable {
 
 	private final static long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String code;
 	private String title;
@@ -17,7 +27,11 @@ public class Event implements Serializable {
 		this.title = title;
 		this.description = description;
 	}
-	
+
+	public Event() {
+
+	}
+
 	/**
 	 * @return the id
 	 */

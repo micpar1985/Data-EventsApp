@@ -1,14 +1,14 @@
 package com.event_app.data_services.api;
 
 import com.event_app.data_services.model.Customer;
-import com.event_app.data_services.repository.CustomerRepository;
 import com.event_app.data_services.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.Collection;
-import com.event_app.data_services.repository.InMemoryCustomerRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+import java.net.URI;
+
 
 @RestController
 @RequestMapping("/customers")
@@ -18,22 +18,53 @@ public class CustomersController {
     CustomerService customerService;
 
     @RequestMapping
-    public Collection<Customer> findAllCustomers() {
-        Collection<Customer> customers = customerService.findAll();
+    public Iterable<Customer> findAllCustomers() {
+        Iterable<Customer> customers = customerService.findAll();
 
         return customers;
     }
 
     @RequestMapping("/{id}")
     public Customer findCustomerById(@PathVariable("id") Long id) {
-        return customerService.findById(id);
+        return customerService.findById(id).get();
     }
 
     @RequestMapping("/byName/{name}")
     public Customer findCustomerByName(@PathVariable("name") String name) {
+
         return customerService.findByName(name);
     }
 
+    @PostMapping
+    public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer,
+                                         UriComponentsBuilder uri) {
 
+        if (newCustomer.getId() != 0 || newCustomer.getName() == null
+                || newCustomer.getEmail() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        newCustomer=customerService.save(newCustomer);
+        URI location= ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(newCustomer.getId()).toUri();
+        ResponseEntity<?> response=ResponseEntity.created(location).build();
+        return response;
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> putCustomer(@RequestBody Customer newCustomer,
+                                         @PathVariable("id") long id) {
+        if (newCustomer.getId() != id
+                || newCustomer.getName() == null
+                || newCustomer.getEmail() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        newCustomer = customerService.save(newCustomer);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable Long id) {
+        customerService.deleteById(id);
+    }
 }
+

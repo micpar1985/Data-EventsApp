@@ -1,24 +1,11 @@
 package com.event_app.data_services.repository;
 
-import java.util.Collection;
-
 import com.event_app.data_services.model.Customer;
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.CrudRepository;
 
-//import com.event_app.data_services
-public interface CustomerRepository { 
 
-		public Customer findById(Long id);
-		
-		public Collection<Customer> findAll();
-		
-		public Customer findByName(String name);
-		
-		//public long count();
-		
-		//public Customer save(Customer customer);
-		
-		//public void delete(Customer customer);
-		
-	
+public interface
+CustomerRepository extends CrudRepository<Customer, Long> {
+
+	Customer findByName(String name);
 }
