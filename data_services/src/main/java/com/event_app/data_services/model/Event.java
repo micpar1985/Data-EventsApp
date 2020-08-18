@@ -27,7 +27,11 @@ public class Event implements Serializable {
 		this.title = title;
 		this.description = description;
 	}
-	
+
+	public Event() {
+
+	}
+
 	/**
 	 * @return the id
 	 */

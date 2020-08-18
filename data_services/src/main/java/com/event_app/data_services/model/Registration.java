@@ -30,7 +30,11 @@ public class Registration implements Serializable{
 		this.registration_date = registration_date;
 		this.notes = notes;
 	}
-	
+
+	public Registration() {
+
+	}
+
 	/**
 	 * @return the id
 	 */

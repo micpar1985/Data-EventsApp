@@ -28,15 +28,15 @@ public class Customer implements Serializable{
 		this.password = password;
 		this.email = email;
 	}
-	
-	public long getId() {
-		return id;
+
+	public Customer() {	}
+
+	public Long getId() {
+		return this.id;
 	}
-	
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public String getName() {
 		return name;
 	}
