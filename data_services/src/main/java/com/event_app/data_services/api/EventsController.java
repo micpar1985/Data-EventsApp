@@ -1,7 +1,10 @@
 package com.event_app.data_services.api;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import com.event_app.data_services.model.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,43 +35,63 @@ public class EventsController {
 	@RequestMapping
 	public Iterable<Event> findAllEvents() {
 		Iterable<Event> events = eventService.findAllEvents();
-
-		return events;
+		return events;  //this one is probably fine
 	}
 
 	@RequestMapping("/{id}")
-	public Event findEventById(@PathVariable("id") Long id) {
-		return eventService.findByEventId(id).get();
-	}
+	public ResponseEntity<?> findEventById(@PathVariable("id") Long id) {
 
-	@GetMapping
-	public Iterable<Event> getAll() {
-		return repo.findAll();
-	}
+		try {
+			Optional<Event> event = eventService.findByEventId(id);
+			ResponseEntity<?> response;
+			response = ResponseEntity.ok(event.get());
+			return response;
+		} catch (NoSuchElementException e) {
+			ResponseEntity<?> response = ResponseEntity.badRequest().body("Event not found");
+			return response;
 
-	@GetMapping("/{eventId}")
+			//return eventService.findByEventId(id).get();
+		}
+
+		//@GetMapping
+		//public Iterable<Event> getAll() {
+		//		return repo.findAll();
+		//	}
+		//}
+		//how is this code different than finAllEvents()?  is this supposed to be inside findEventById?
+	}
+	@GetMapping("/{eventId}") //whats the differnce between the id and eventId?
 	public Optional<Event> getEventById(@PathVariable("eventId") long id) {
 		return repo.findById(id);
 	}
 
 	@PostMapping
 	public ResponseEntity<?> addEvent(@RequestBody Event newEvent, UriComponentsBuilder uri) {
-		if (newEvent.getId() != 0 
-				|| newEvent.getCode() == null 
-				|| newEvent.getTitle() == null
-				|| newEvent.getDescription() == null) {// Reject - we'll assign the Event id
-			return ResponseEntity.badRequest().build();
+
+		try {
+			if (newEvent.getId() != 0
+					|| newEvent.getCode() == null
+					|| newEvent.getTitle() == null
+					|| newEvent.getDescription() == null) {
+				return ResponseEntity.badRequest().build();
+
+				}
+				newEvent = repo.save(newEvent);
+				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
+						.toUri();
+				ResponseEntity<?> response = ResponseEntity.created(location).build();
+				return response;
+
+		} catch (Exception e ){
+			return ResponseEntity.badRequest().body("Please fill in all sections");
 		}
-		newEvent = repo.save(newEvent);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
-				.toUri();
-		ResponseEntity<?> response = ResponseEntity.created(location).build();
-		return response;
 	}
 
-	@PutMapping("/{eventId}")
+		@PutMapping("/{eventId}")
 	public ResponseEntity<?> putEvent(@RequestBody Event newEvent,
 			@PathVariable("eventId") long eventId) {
+
+		try {
 		if (newEvent.getId() != eventId 
 				|| newEvent.getCode() == null 
 				|| newEvent.getTitle() == null 
@@ -77,7 +100,11 @@ public class EventsController {
 		}
 		newEvent = eventService.save(newEvent);
 		return ResponseEntity.ok().build();
+	} catch (Exception e ){
+			return ResponseEntity.badRequest().body("Please fill in all sections");
+		}
 	}
+
 
 	@DeleteMapping("/{id}")
 	public void deleteEvent(@PathVariable Long id) {
