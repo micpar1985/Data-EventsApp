@@ -27,7 +27,7 @@ public class CustomersController {
             ResponseEntity<?> response = ResponseEntity.ok(customers);
             return response;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             ResponseEntity<?> response = ResponseEntity.badRequest().body("Sorry, something went wrong.");
             return response;
 
@@ -44,8 +44,8 @@ public class CustomersController {
             ResponseEntity<?> response = ResponseEntity.ok(customer.get());
             return response;
 
-        }catch (Exception e){
-            ResponseEntity<?> response = ResponseEntity.badRequest().body("Customer not found.");
+        } catch (NoSuchElementException e) {
+            ResponseEntity<?> response = ResponseEntity.notFound().build();
             return response;
         }
 
@@ -60,7 +60,7 @@ public class CustomersController {
             ResponseEntity<?> response = ResponseEntity.ok(customer.get());
             return response;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             ResponseEntity<?> response = ResponseEntity.badRequest().body("Customer name not found.");
             return response;
         }
@@ -70,10 +70,10 @@ public class CustomersController {
     public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer,
                                          UriComponentsBuilder uri) {
         try {
-        if (newCustomer.getId() != 0 || newCustomer.getName() == null
-                || newCustomer.getEmail() == null) {
-            return ResponseEntity.badRequest().build();
-        }
+            if (newCustomer.getId() != 0 || newCustomer.getName() == null
+                    || newCustomer.getEmail() == null) {
+                return ResponseEntity.badRequest().build();
+            }
 
 
             newCustomer = customerService.save(newCustomer);
@@ -81,7 +81,7 @@ public class CustomersController {
                     .path("/{id}").buildAndExpand(newCustomer.getId()).toUri();
             ResponseEntity<?> response = ResponseEntity.created(location).build();
             return response;
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Sorry, something went wrong.");
         }
     }
@@ -90,17 +90,17 @@ public class CustomersController {
     public ResponseEntity<?> putCustomer(@RequestBody Customer newCustomer,
                                          @PathVariable("id") long id) {
         try {
-        if (newCustomer.getId() != id
-                || newCustomer.getName() == null
-                || newCustomer.getEmail() == null) {
-            return ResponseEntity.badRequest().build();
+            if (newCustomer.getId() != id
+                    || newCustomer.getName() == null
+                    || newCustomer.getEmail() == null) {
+                return ResponseEntity.badRequest().build();
 
-        }
+            }
 
             newCustomer = customerService.save(newCustomer);
             return ResponseEntity.ok().build();
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body("Sorry, something went wrong.");
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -109,8 +109,8 @@ public class CustomersController {
         try {
             customerService.deleteById(id);
             return ResponseEntity.noContent().build();
-        }catch (EmptyResultDataAccessException e){
-            return ResponseEntity.badRequest().body("Customer doesn't exist.");
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
