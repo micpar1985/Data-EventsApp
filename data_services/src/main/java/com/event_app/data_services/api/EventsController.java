@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.event_app.data_services.model.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,8 +108,14 @@ public class EventsController {
 
 
 	@DeleteMapping("/{id}")
-	public void deleteEvent(@PathVariable Long id) {
-		eventService.deleteById(id);
-	}
+	public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
 
+		try {
+			eventService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch (EmptyResultDataAccessException e) {
+			return ResponseEntity.badRequest().body("Event doesn't exist.");
+		}
+
+	}
 }
