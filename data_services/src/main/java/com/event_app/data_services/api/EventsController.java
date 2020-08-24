@@ -48,19 +48,11 @@ public class EventsController {
 			response = ResponseEntity.ok(event.get());
 			return response;
 		} catch (NoSuchElementException e) {
-			ResponseEntity<?> response = ResponseEntity.badRequest().body("Event not found");
+			ResponseEntity<?> response = ResponseEntity.notFound().build();
 			return response;
-
-			//return eventService.findByEventId(id).get();
 		}
-
-		//@GetMapping
-		//public Iterable<Event> getAll() {
-		//		return repo.findAll();
-		//	}
-		//}
-		//how is this code different than finAllEvents()?  is this supposed to be inside findEventById?
 	}
+
 	@GetMapping("/{eventId}") //whats the differnce between the id and eventId?
 	public Optional<Event> getEventById(@PathVariable("eventId") long id) {
 		return repo.findById(id);
@@ -74,35 +66,35 @@ public class EventsController {
 					|| newEvent.getCode() == null
 					|| newEvent.getTitle() == null
 					|| newEvent.getDescription() == null) {
-				return ResponseEntity.badRequest().build();
+				return ResponseEntity.notFound().build();
 
-				}
-				newEvent = repo.save(newEvent);
-				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
-						.toUri();
-				ResponseEntity<?> response = ResponseEntity.created(location).build();
-				return response;
+			}
+			newEvent = repo.save(newEvent);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
+					.toUri();
+			ResponseEntity<?> response = ResponseEntity.created(location).build();
+			return response;
 
-		} catch (Exception e ){
-			return ResponseEntity.badRequest().body("Please fill in all sections");
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
 		}
 	}
 
-		@PutMapping("/{eventId}")
+	@PutMapping("/{eventId}")
 	public ResponseEntity<?> putEvent(@RequestBody Event newEvent,
-			@PathVariable("eventId") long eventId) {
+									  @PathVariable("eventId") long eventId) {
 
 		try {
-		if (newEvent.getId() != eventId 
-				|| newEvent.getCode() == null 
-				|| newEvent.getTitle() == null 
-				|| newEvent.getDescription()== null) {
-			return ResponseEntity.badRequest().build();
-		}
-		newEvent = eventService.save(newEvent);
-		return ResponseEntity.ok().build();
-	} catch (Exception e ){
-			return ResponseEntity.badRequest().body("Please fill in all sections");
+			if (newEvent.getId() != eventId
+					|| newEvent.getCode() == null
+					|| newEvent.getTitle() == null
+					|| newEvent.getDescription() == null) {
+				return ResponseEntity.notFound().build();
+			}
+			newEvent = eventService.save(newEvent);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
 		}
 	}
 
@@ -114,7 +106,7 @@ public class EventsController {
 			eventService.deleteById(id);
 			return ResponseEntity.noContent().build();
 		} catch (EmptyResultDataAccessException e) {
-			return ResponseEntity.badRequest().body("Event doesn't exist.");
+			return ResponseEntity.notFound().build();
 		}
 
 	}
