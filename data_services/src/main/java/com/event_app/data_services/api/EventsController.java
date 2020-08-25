@@ -30,9 +30,6 @@ public class EventsController {
 	@Autowired
 	EventService eventService;
 
-	@Autowired
-	EventsRepository repo;
-
 	@RequestMapping
 	public Iterable<Event> findAllEvents() {
 		Iterable<Event> events = eventService.findAllEvents();
@@ -53,11 +50,6 @@ public class EventsController {
 		}
 	}
 
-	//@GetMapping("/{eventId}") //whats the differnce between the id and eventId?
-	//public Optional<Event> getEventById(@PathVariable("eventId") long id) {
-	//	return repo.findById(id);
-	//}
-
 	@PostMapping
 	public ResponseEntity<?> addEvent(@RequestBody Event newEvent, UriComponentsBuilder uri) {
 
@@ -69,7 +61,7 @@ public class EventsController {
 				return ResponseEntity.notFound().build();
 
 			}
-			newEvent = repo.save(newEvent);
+			newEvent = eventService.save(newEvent);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
 					.toUri();
 			ResponseEntity<?> response = ResponseEntity.created(location).build();
