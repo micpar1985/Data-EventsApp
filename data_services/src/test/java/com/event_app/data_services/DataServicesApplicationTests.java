@@ -1,4 +1,4 @@
-package com.event_app.data_services;
+/*package com.event_app.data_services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class DataServicesApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
