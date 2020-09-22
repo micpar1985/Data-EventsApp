@@ -1,8 +1,12 @@
 package com.event_app.data_services.api;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import com.event_app.data_services.model.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,62 +30,76 @@ public class EventsController {
 	@Autowired
 	EventService eventService;
 
-	@Autowired
-	EventsRepository repo;
-
 	@RequestMapping
 	public Iterable<Event> findAllEvents() {
 		Iterable<Event> events = eventService.findAllEvents();
-
-		return events;
+		return events;  //this one is probably fine
 	}
 
 	@RequestMapping("/{id}")
-	public Event findEventById(@PathVariable("id") Long id) {
-		return eventService.findByEventId(id).get();
-	}
+	public ResponseEntity<?> findEventById(@PathVariable("id") Long id) {
 
-	@GetMapping
-	public Iterable<Event> getAll() {
-		return repo.findAll();
-	}
-
-	@GetMapping("/{eventId}")
-	public Optional<Event> getEventById(@PathVariable("eventId") long id) {
-		return repo.findById(id);
+		try {
+			Optional<Event> event = eventService.findByEventId(id);
+			ResponseEntity<?> response;
+			response = ResponseEntity.ok(event.get());
+			return response;
+		} catch (NoSuchElementException e) {
+			ResponseEntity<?> response = ResponseEntity.notFound().build();
+			return response;
+		}
 	}
 
 	@PostMapping
 	public ResponseEntity<?> addEvent(@RequestBody Event newEvent, UriComponentsBuilder uri) {
-		if (newEvent.getId() != 0 
-				|| newEvent.getCode() == null 
-				|| newEvent.getTitle() == null
-				|| newEvent.getDescription() == null) {// Reject - we'll assign the Event id
-			return ResponseEntity.badRequest().build();
+
+		try {
+			if (newEvent.getId() != 0
+					|| newEvent.getCode() == null
+					|| newEvent.getTitle() == null
+					|| newEvent.getDescription() == null) {
+				return ResponseEntity.notFound().build();
+
+			}
+			newEvent = eventService.save(newEvent);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
+					.toUri();
+			ResponseEntity<?> response = ResponseEntity.created(location).build();
+			return response;
+
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
 		}
-		newEvent = repo.save(newEvent);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
-				.toUri();
-		ResponseEntity<?> response = ResponseEntity.created(location).build();
-		return response;
 	}
 
 	@PutMapping("/{eventId}")
 	public ResponseEntity<?> putEvent(@RequestBody Event newEvent,
-			@PathVariable("eventId") long eventId) {
-		if (newEvent.getId() != eventId 
-				|| newEvent.getCode() == null 
-				|| newEvent.getTitle() == null 
-				|| newEvent.getDescription()== null) {
-			return ResponseEntity.badRequest().build();
+									  @PathVariable("eventId") long eventId) {
+
+		try {
+			if (newEvent.getId() != eventId
+					|| newEvent.getCode() == null
+					|| newEvent.getTitle() == null
+					|| newEvent.getDescription() == null) {
+				return ResponseEntity.notFound().build();
+			}
+			newEvent = eventService.save(newEvent);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
 		}
-		newEvent = eventService.save(newEvent);
-		return ResponseEntity.ok().build();
 	}
+
 
 	@DeleteMapping("/{id}")
-	public void deleteEvent(@PathVariable Long id) {
-		eventService.deleteById(id);
-	}
+	public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
 
+		try {
+			eventService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch (EmptyResultDataAccessException e) {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
 }

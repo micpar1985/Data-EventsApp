@@ -3,11 +3,14 @@ package com.event_app.data_services.api;
 import com.event_app.data_services.model.Customer;
 import com.event_app.data_services.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @RestController
@@ -18,53 +21,97 @@ public class CustomersController {
     CustomerService customerService;
 
     @RequestMapping
-    public Iterable<Customer> findAllCustomers() {
-        Iterable<Customer> customers = customerService.findAll();
+    public ResponseEntity<?> findAllCustomers() {
+        try {
+            Iterable<Customer> customers = customerService.findAll();
+            ResponseEntity<?> response = ResponseEntity.ok(customers);
+            return response;
 
-        return customers;
+        } catch (Exception e) {
+            ResponseEntity<?> response = ResponseEntity.badRequest().body("Sorry, something went wrong.");
+            return response;
+
+        }
+
+
     }
 
     @RequestMapping("/{id}")
-    public Customer findCustomerById(@PathVariable("id") Long id) {
-        return customerService.findById(id).get();
+    public ResponseEntity<?> findCustomerById(@PathVariable("id") Long id) {
+
+        try {
+            Optional<Customer> customer = customerService.findById(id);
+            ResponseEntity<?> response = ResponseEntity.ok(customer.get());
+            return response;
+
+        } catch (NoSuchElementException e) {
+            ResponseEntity<?> response = ResponseEntity.notFound().build();
+            return response;
+        }
+
     }
 
-    @RequestMapping("/byName/{name}")
-    public Customer findCustomerByName(@PathVariable("name") String name) {
 
-        return customerService.findByName(name);
+    @RequestMapping("/byName/{name}")
+    public ResponseEntity<?> findCustomerByName(@PathVariable("name") String name) {
+
+        try {
+            Optional<Customer> customer = Optional.ofNullable(customerService.findByName(name));
+            ResponseEntity<?> response = ResponseEntity.ok(customer.get());
+            return response;
+
+        } catch (Exception e) {
+            ResponseEntity<?> response = ResponseEntity.badRequest().body("Customer name not found.");
+            return response;
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer,
                                          UriComponentsBuilder uri) {
+        try {
+            if (newCustomer.getId() != 0 || newCustomer.getName() == null
+                    || newCustomer.getEmail() == null) {
+                return ResponseEntity.badRequest().build();
+            }
 
-        if (newCustomer.getId() != 0 || newCustomer.getName() == null
-                || newCustomer.getEmail() == null) {
-            return ResponseEntity.badRequest().build();
+
+            newCustomer = customerService.save(newCustomer);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}").buildAndExpand(newCustomer.getId()).toUri();
+            ResponseEntity<?> response = ResponseEntity.created(location).build();
+            return response;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Sorry, something went wrong.");
         }
-        newCustomer=customerService.save(newCustomer);
-        URI location= ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(newCustomer.getId()).toUri();
-        ResponseEntity<?> response=ResponseEntity.created(location).build();
-        return response;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> putCustomer(@RequestBody Customer newCustomer,
                                          @PathVariable("id") long id) {
-        if (newCustomer.getId() != id
-                || newCustomer.getName() == null
-                || newCustomer.getEmail() == null) {
-            return ResponseEntity.badRequest().build();
+        try {
+            if (newCustomer.getId() != id
+                    || newCustomer.getName() == null
+                    || newCustomer.getEmail() == null) {
+                return ResponseEntity.badRequest().build();
+
+            }
+
+            newCustomer = customerService.save(newCustomer);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-        newCustomer = customerService.save(newCustomer);
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id) {
-        customerService.deleteById(id);
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+        try {
+            customerService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @RestController
@@ -25,9 +27,18 @@ public class RegistrationsController {
     }
 
     @RequestMapping("/{id}")
-    public Registration findRegistrationById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> findRegistrationById(@PathVariable("id") Long id) {
 
-        return registrationService.findById(id).get();
+    	try {
+    		Optional<Registration> registration = registrationService.findById(id);
+    		ResponseEntity<?> response = ResponseEntity.ok(registration.get());
+    		return response;
+    	}
+    	catch(NoSuchElementException e){
+    		ResponseEntity<?> response = ResponseEntity.badRequest().body("Registration not found");
+    		return response;
+    	}
+        //return registrationService.findById(id).get();
     }
 
     @PostMapping
