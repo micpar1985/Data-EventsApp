@@ -9,7 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,11 +25,7 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String uri = req.getRequestURI();
-		if (uri.startsWith("/token")) {
-			// continue on to get-token endpoint
-			chain.doFilter(request, response);
-			return;
-		} else {
+		if (uri.startsWith("/api/customers") || uri.startsWith("/api/events") || uri.startsWith("/api/registrations")) {
 			// check JWT token
 			String authheader = req.getHeader("authorization");
 			if (authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
@@ -44,6 +39,10 @@ public class AuthFilter implements Filter {
 					}
 				}
 			}
+		} else {
+				// continue on to get-token endpoint
+				chain.doFilter(request, response);
+				return;
 		}
 
 		// reject request and return error instead of data
