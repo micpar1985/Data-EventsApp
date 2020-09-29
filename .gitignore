@@ -1,7 +1,10 @@
 HELP.md
 .gradle
+gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
+gradlew.bat
+settings.gradle
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -38,3 +41,4 @@ bin/
 .tmp
 tmp
 .metadata/
+*/src/.metadata/

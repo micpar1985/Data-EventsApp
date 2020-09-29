@@ -22,6 +22,8 @@ import com.event_app.data_services.model.Event;
 import com.event_app.data_services.repository.EventsRepository;
 import com.event_app.data_services.service.EventService;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController
 @RequestMapping("/events")
@@ -29,77 +31,120 @@ public class EventsController {
 
 	@Autowired
 	EventService eventService;
+	
+	@Autowired
+    private Tracer tracer;
 
 	@RequestMapping
 	public Iterable<Event> findAllEvents() {
+    	Span span = tracer.buildSpan("Find All Events").start();
+    	span.setTag("http.status_code", 200);
 		Iterable<Event> events = eventService.findAllEvents();
-		return events;  //this one is probably fine
+		
+		span.finish();
+		return events;
 	}
 
 	@RequestMapping("/{id}")
 	public ResponseEntity<?> findEventById(@PathVariable("id") Long id) {
 
+		//---- Start Jaeger Span ----//
+    	Span span = tracer.buildSpan("Find Event by ID").start();
+    	ResponseEntity<?> response;
+    	
 		try {
 			Optional<Event> event = eventService.findByEventId(id);
-			ResponseEntity<?> response;
 			response = ResponseEntity.ok(event.get());
-			return response;
+			span.setTag("http.status_code",  200);
 		} catch (NoSuchElementException e) {
-			ResponseEntity<?> response = ResponseEntity.notFound().build();
-			return response;
+			response = ResponseEntity.notFound().build();
+			span.setTag("http.status_code",  404);
 		}
+		
+		//---- Finish Span ----//
+		span.finish();
+		return response;
 	}
 
 	@PostMapping
 	public ResponseEntity<?> addEvent(@RequestBody Event newEvent, UriComponentsBuilder uri) {
 
+		//---- Start Jaeger Span ----//
+    	Span span = tracer.buildSpan("Add Event").start();
+    	ResponseEntity<?> response;
+    	
 		try {
 			if (newEvent.getId() != 0
 					|| newEvent.getCode() == null
 					|| newEvent.getTitle() == null
 					|| newEvent.getDescription() == null) {
-				return ResponseEntity.notFound().build();
-
+				response = ResponseEntity.badRequest().build();
+				span.setTag("http.status_code",  400);
+				span.finish();
+				return response;
 			}
 			newEvent = eventService.save(newEvent);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newEvent.getId())
 					.toUri();
-			ResponseEntity<?> response = ResponseEntity.created(location).build();
-			return response;
+			response = ResponseEntity.created(location).build();
+			span.setTag("http.status_code",  201);
 
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			response = ResponseEntity.notFound().build();
+			span.setTag("http.status_code",  404);
 		}
+		
+		span.finish();
+		return response;
 	}
 
 	@PutMapping("/{eventId}")
 	public ResponseEntity<?> putEvent(@RequestBody Event newEvent,
 									  @PathVariable("eventId") long eventId) {
 
+		//---- Start Jaeger Span ----//
+    	Span span = tracer.buildSpan("Edit Event").start();
+    	ResponseEntity<?> response;
+    	
 		try {
 			if (newEvent.getId() != eventId
 					|| newEvent.getCode() == null
 					|| newEvent.getTitle() == null
 					|| newEvent.getDescription() == null) {
-				return ResponseEntity.notFound().build();
+				response = ResponseEntity.badRequest().build();
+				span.setTag("http.status_code",  400);
+				span.finish();
+				return response;
 			}
 			newEvent = eventService.save(newEvent);
-			return ResponseEntity.ok().build();
+			response =  ResponseEntity.ok().build();
+			span.setTag("http.status_code",  200);
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			response = ResponseEntity.notFound().build();
+			span.setTag("http.status_code",  404);
 		}
+		span.finish();
+		return response;
 	}
 
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
 
+		//---- Start Jaeger Span ----//
+    	Span span = tracer.buildSpan("Delete Event").start();
+    	ResponseEntity<?> response;
+    	
 		try {
 			eventService.deleteById(id);
-			return ResponseEntity.noContent().build();
+			response = ResponseEntity.noContent().build();
+			span.setTag("http.status_code",  204);
 		} catch (EmptyResultDataAccessException e) {
-			return ResponseEntity.notFound().build();
+			response =  ResponseEntity.notFound().build();
+			span.setTag("http.status_code", 404);
 		}
+		span.finish();
+		return response;
 
 	}
 }
